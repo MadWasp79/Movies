@@ -1,4 +1,4 @@
 <resources>
   <string name="app_name">Movies</string>
-  <string name="api_error_movies">Error loading repos!</string>
+  <string name="api_error_movies">Error loading Movies! Try Reload!</string>
 </resources>

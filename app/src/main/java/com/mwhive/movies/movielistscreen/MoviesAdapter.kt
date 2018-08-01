@@ -1,5 +1,6 @@
 package com.mwhive.movies.movielistscreen
 
+import android.support.v4.widget.CircularProgressDrawable
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.mwhive.movies.R
 import com.mwhive.movies.model.Movie
 
@@ -63,13 +65,23 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
         fun bind(movie: Movie) {
             this.movie = movie
+
+            val circularProgressDrawable = CircularProgressDrawable(posterImageView.context)
+            circularProgressDrawable.strokeWidth = 5f
+            circularProgressDrawable.centerRadius = 30f
+            circularProgressDrawable.start()
+
             val votesLine = "${movie.voteAverage}/10 (${movie.voteCount} votes)"
             val imageUrl = baseImageUrl+movie.posterPath
             println(movie.title)
             movieTitle.text = movie.title
             movieMark.text = votesLine
-            Glide.with(posterImageView.context).load(imageUrl).into(posterImageView)
-            //todo placeholder
+            Glide.with(posterImageView.context)
+                    .load(imageUrl)
+                    .apply(RequestOptions()
+                            .placeholder(R.drawable.pl_holder).fitCenter())
+                    .into(posterImageView)
+
             //todo imagecolor analize and change
         }
 
