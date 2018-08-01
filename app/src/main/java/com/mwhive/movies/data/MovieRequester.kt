@@ -12,9 +12,10 @@ import javax.inject.Inject
  */
 
 class MovieRequester @Inject
-internal constructor(private val service: MovieServiceApi) {
-    fun getPopularMoviseList() : Single<List<Movie>> = service
+constructor(private val service: MovieServiceApi) {
+    lateinit var test: Popular
+    fun getPopularMoviesList() : Single<List<Movie>> = service
             .getPopularMovies()
-            .map(Popular::results)
+            .map { it.results }
             .subscribeOn(Schedulers.io())
 }

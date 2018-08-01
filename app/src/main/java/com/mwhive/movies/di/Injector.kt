@@ -21,13 +21,13 @@ object Injector {
     //inject Controller
     @JvmStatic
     fun inject(controller: Controller) {
-        ScreenInjector.get(controller.activity!!).inject(controller)
+        ScreenInjector.get(controller.activity).inject(controller)
     }
 
     //clear Controller
     @JvmStatic
     fun clearComponent(controller: Controller) {
-        ScreenInjector.get(controller.activity!!).clear(controller)
+        ScreenInjector.get(controller.activity).clear(controller)
     }
 
 }

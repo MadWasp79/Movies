@@ -11,15 +11,19 @@ import javax.inject.Inject
 
 @ScreenScope
 class MoviesListPresenter
-@Inject constructor(val viewModel: MoviesListViewModel, val movieRequester: MovieRequester){
+@Inject constructor(private val viewModel: MoviesListViewModel, private val movieRequester: MovieRequester){
     init {
         loadMovies()
     }
 
     private fun loadMovies() {
-        movieRequester.getPopularMoviseList()
+        movieRequester.getPopularMoviesList()
                 .doOnSubscribe { viewModel.loadingUpdated().accept(true) }
                 .doOnEvent {d,t -> viewModel.loadingUpdated().accept(false) }
                 .subscribe(viewModel.moviesUpdated(), viewModel.onError())
+    }
+
+    fun reload(){
+        loadMovies()
     }
 }

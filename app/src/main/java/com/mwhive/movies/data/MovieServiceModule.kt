@@ -11,7 +11,7 @@ import javax.inject.Singleton
  */
 
 @Module
-object MovieServiceModule {
+class MovieServiceModule {
 
     @Provides
     @Singleton

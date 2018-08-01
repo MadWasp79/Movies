@@ -39,7 +39,7 @@ class MoviesListViewModel @Inject constructor(){
         errorRelay.accept(R.string.api_error_movies)
     }
 
-    private fun requestReload(): Consumer<Boolean> = reloadRelay
+    fun requestReload(): Consumer<Boolean> = reloadRelay
 
 
 
