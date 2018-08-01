@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.jakewharton.rxbinding2.view.RxView
 import com.mwhive.movies.R
 import com.mwhive.movies.base.BaseController
+import com.mwhive.movies.customviews.WrappableGridLayoutManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
@@ -33,9 +34,9 @@ class MoviesListController : BaseController(){
         loadingView = view.findViewById(R.id.loading_indicator) as View
         errorText = view.findViewById(R.id.error_text) as TextView
         reloadFAB = view.findViewById(R.id.reload_fab) as FloatingActionButton
-        var columnNum =  if (this.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4
-        movieList.layoutManager = GridLayoutManager(view.context, columnNum )
-        movieList.adapter = MoviesAdapter()
+        val columnNum =  if (this.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) 2 else 4
+        movieList.layoutManager = GridLayoutManager(view.context, columnNum)
+        movieList.adapter = MovieAdapter()
         super.onViewBound(view)
     }
 
@@ -51,7 +52,7 @@ class MoviesListController : BaseController(){
                         },
                 viewModel.movies()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe((movieList.adapter as MoviesAdapter)::setData),
+                        .subscribe((movieList.adapter as MovieAdapter)::setData),
                 viewModel.error()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe{ errorRes ->
