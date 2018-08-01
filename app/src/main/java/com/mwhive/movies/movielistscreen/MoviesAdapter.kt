@@ -18,6 +18,10 @@ import com.mwhive.movies.model.Movie
 
 /**
  * Created by MadWasp79 on 31-Jul-18.
+ *
+ * У котлина проблема с загрузкой имиджей глайдом. Ну, не то что б проблема, но нужно дополнительно описывать scaling,
+ * потому в качестве полноценной замены переписал адаптер на java. А вообще хороший вопрос, нужно будет еще покурить его.
+ *
  */
 
 class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
@@ -48,7 +52,6 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
     }
 
     fun setData(movies: List<Movie>){
-        Log.d("LOGTAG", movies.toString())
         data.addAll(movies)
         notifyDataSetChanged()
     }
@@ -59,21 +62,15 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
         var movieTitle: TextView = itemView.findViewById<TextView>(R.id.movie_title)
         var movieMark : TextView = itemView.findViewById<TextView>(R.id.movie_mark)
 
-        lateinit var movie: Movie
+        private lateinit var movie: Movie
 
-        private val baseImageUrl = "http://image.tmdb.org/t/p/w500/"
+        private val baseImageUrl = "http://image.tmdb.org/t/p/w342/"
 
         fun bind(movie: Movie) {
             this.movie = movie
-
-            val circularProgressDrawable = CircularProgressDrawable(posterImageView.context)
-            circularProgressDrawable.strokeWidth = 5f
-            circularProgressDrawable.centerRadius = 30f
-            circularProgressDrawable.start()
-
             val votesLine = "${movie.voteAverage}/10 (${movie.voteCount} votes)"
             val imageUrl = baseImageUrl+movie.posterPath
-            println(movie.title)
+
             movieTitle.text = movie.title
             movieMark.text = votesLine
             Glide.with(posterImageView.context)
@@ -81,6 +78,7 @@ class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
                     .apply(RequestOptions()
                             .placeholder(R.drawable.pl_holder).fitCenter())
                     .into(posterImageView)
+
 
             //todo imagecolor analize and change
         }
